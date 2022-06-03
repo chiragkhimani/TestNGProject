@@ -2,12 +2,11 @@ package com.automation.pages;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 import com.automation.utils.ConfigReader;
-import com.automation.utils.DriverUtils;
 
-public class LoginPage {
+public class LoginPage extends BasePage {
 
 	@FindBy(id = "user-name")
 	WebElement userNameInput;
@@ -18,18 +17,21 @@ public class LoginPage {
 	@FindBy(id = "login-button")
 	WebElement loginBtn;
 
-	public LoginPage() {
-		PageFactory.initElements(DriverUtils.driver, this);
-	}
+	@FindBy(xpath = "//h3[@data-test='error']")
+	WebElement invalidLoginErrorMsg;
 
-	public void doLogin() {
-		userNameInput.sendKeys(ConfigReader.getProperty("user.name"));
-		passwordInput.sendKeys(ConfigReader.getProperty("user.password"));
+	public void doLogin(String username, String password) {
+		userNameInput.sendKeys(username);
+		passwordInput.sendKeys(password);
 		loginBtn.click();
 	}
 
 	public void openWebsite() {
-		DriverUtils.driver.get(ConfigReader.getProperty("app.url"));
+		driver.get(ConfigReader.getProperty("app.url"));
+	}
+
+	public void verifyInvalidLoginErrorMsg() {
+		Assert.assertTrue(invalidLoginErrorMsg.isDisplayed(), "Invalid login error msg missing from login page");
 	}
 
 }

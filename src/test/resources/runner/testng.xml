@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Chirag Test" verbose="1">
+	<test name="LoginTest">
+		<groups>
+			<run>
+				<exclude name="preeti" />
+			</run>
+		</groups>
+
+		<classes>
+			<class name="com.automation.tests.CartTest" />
+			<class name="com.automation.tests.LoginTest" />
+		</classes>
+	</test>
+</suite>
